@@ -25,11 +25,11 @@ public class TransactionAction extends HttpServlet {
         Transaction tx = session.getTransaction();
         try {
             tx.begin();
-           Transactions transactions = new Transactions();
-            int id = Integer.parseInt(request.getParameter("tid"));
+           TransactionClass transactions = new TransactionClass();
+            //int id = Integer.parseInt(request.getParameter("tid"));
             String AccNo= request.getParameter("tAccNo");
             String Amount= request.getParameter("tAmount");
-            transactions.setId(id);
+            //transactions.setId(id);
             transactions.setAccNo(AccNo);
             transactions.setAmount(Amount);
             session.save(transactions);
@@ -48,7 +48,7 @@ public class TransactionAction extends HttpServlet {
         Transaction tx = session.getTransaction();
         try {
             tx.begin();
-            List<Transactions> transactions = session.createQuery("From Transactions r").getResultList();
+            List<TransactionClass> transactions = session.createQuery("From TransactionClass r").getResultList();
             //List<Student> students = session.createCriteria(Student.class).list();
             ObjectMapper json = new ObjectMapper();
             response.getWriter().println(json.writeValueAsString(transactions));
@@ -66,7 +66,7 @@ public class TransactionAction extends HttpServlet {
         Transaction tx = session.getTransaction();
         try {
             tx.begin();
-            Transactions transcations = session.get(Transactions.class, Integer.parseInt(id));
+            TransactionClass transcations = session.get(TransactionClass.class, Integer.parseInt(id));
             session.delete(transcations);
             response.getWriter().println("Data deleted Successfully!!");
             tx.commit();

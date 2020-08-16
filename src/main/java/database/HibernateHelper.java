@@ -6,7 +6,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
 
-import finance.Transactions;
+import finance.TransactionClass;
 
 import java.util.Properties;
 
@@ -23,9 +23,9 @@ public class HibernateHelper {
 
         Properties properties = new Properties();
         properties.setProperty(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
-        properties.setProperty(Environment.URL, "jdbc:mysql://192.168.254.189:3306/shule_yetus?useSSL=false");
+        properties.setProperty(Environment.URL, "jdbc:mysql://localhost:3306/db_datasource?useSSL=false");
         properties.setProperty(Environment.USER, "root");
-        properties.setProperty(Environment.PASS, "");
+        properties.setProperty(Environment.PASS, "password");
         properties.setProperty(Environment.DIALECT, "org.hibernate.dialect.MySQL5Dialect");
         properties.setProperty(Environment.SHOW_SQL, "true");
         properties.setProperty(Environment.HBM2DDL_AUTO, "update");
@@ -33,7 +33,7 @@ public class HibernateHelper {
 
         configuration.setProperties(properties);
 
-        configuration.addAnnotatedClass(Transactions.class);
+        configuration.addAnnotatedClass(TransactionClass.class);
 
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                 .applySettings(configuration.getProperties()).build();

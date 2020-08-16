@@ -3,10 +3,11 @@ package finance;
 import javax.persistence.*;
 
 @Entity
-@Table(name="transaction")
-public class Transactions {
+@Table(name="transactions")
+public class TransactionClass {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column
@@ -15,7 +16,7 @@ public class Transactions {
     @Column
     private String Amount;
 
-    public Transactions() { }
+    public TransactionClass() { }
 
 //    public Student(int id, String name, String email) {
 //        this.id = id;
