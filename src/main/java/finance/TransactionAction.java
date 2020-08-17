@@ -17,7 +17,7 @@ import org.hibernate.Transaction;
 import database.HibernateHelper;
 
 
-@WebServlet(urlPatterns = { "/finance" })
+@WebServlet(urlPatterns = { "/save" })
 public class TransactionAction extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -49,7 +49,6 @@ public class TransactionAction extends HttpServlet {
         try {
             tx.begin();
             List<TransactionClass> transactions = session.createQuery("From TransactionClass r").getResultList();
-            //List<Student> students = session.createCriteria(Student.class).list();
             ObjectMapper json = new ObjectMapper();
             response.getWriter().println(json.writeValueAsString(transactions));
             tx.commit();

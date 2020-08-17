@@ -19,8 +19,6 @@ public class HibernateHelper {
 
         Configuration configuration = new Configuration();
 
-        //configuration.configure("hibernate.cfg.xml");
-
         Properties properties = new Properties();
         properties.setProperty(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
         properties.setProperty(Environment.URL, "jdbc:mysql://localhost:3306/db_datasource?useSSL=false");
