@@ -1,5 +1,6 @@
 package finance;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.List;
 
@@ -15,6 +16,8 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import database.HibernateHelper;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 @WebServlet(urlPatterns = { "/save" })
@@ -26,10 +29,11 @@ public class TransactionAction extends HttpServlet {
         try {
             tx.begin();
            TransactionClass transactions = new TransactionClass();
-            //int id = Integer.parseInt(request.getParameter("tid"));
             String AccNo= request.getParameter("tAccNo");
             String Amount= request.getParameter("tAmount");
-            //transactions.setId(id);
+
+            System.out.println(AccNo);
+            System.out.println(Amount);
             transactions.setAccNo(AccNo);
             transactions.setAmount(Amount);
             session.save(transactions);
