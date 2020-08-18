@@ -10,6 +10,9 @@ $(document).ready(function() {
             data        : formData,
         })
             .done(function(data) {
+                $('input[name=tAccNo]').val('');
+                $('input[name=tAmount]').val('');
+                window.location.href = 'http://localhost:8080/finances/display/display.html';
                 console.log(data);
             });
         event.preventDefault();
