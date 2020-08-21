@@ -2,7 +2,10 @@ package finance;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.text.NumberFormat;
+import java.util.Enumeration;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,23 +27,41 @@ import org.json.JSONObject;
 public class TransactionAction extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        // Get data from POS and split it
+        String data = request.getParameter("data");
+        String splitData[] =  data.split("-");
+
+//        System.out.println(splitData[2]);
+
         Session session = HibernateHelper.getSessionFactory().getCurrentSession();
         Transaction tx = session.getTransaction();
         try {
             tx.begin();
-           TransactionClass transactions = new TransactionClass();
-            String AccNo= request.getParameter("tAccNo");
-            String Amount= request.getParameter("tAmount");
+            TransactionClass transactions = new TransactionClass();
+            String AccNo= splitData[0];
+            String fullAmount = splitData[1];
 
-            System.out.println(AccNo);
-            System.out.println(Amount);
+            // Extract amount without cents
+            String stringAmount = fullAmount.substring(0, fullAmount.length() - 2);
+
+            // Extract cents
+            String cents = fullAmount.substring(fullAmount.length() - 2);
+
+            // Put amount in proper format
+            int intAmount = Integer.parseInt(stringAmount);
+            String amount = NumberFormat.getNumberInstance(Locale.UK).format(intAmount);
+
+
+            String decimalSeparator = ".";
+            String formattedAmount= amount +decimalSeparator+ cents;
+            //System.out.println(formattedAmount);
             transactions.setAccNo(AccNo);
-            transactions.setAmount(Amount);
+            transactions.setAmount(formattedAmount);
             session.save(transactions);
             response.getWriter().println("Data saved successfully!!");
             tx.commit();
         }catch (Exception e){
-            // TODO: handle exception properly
             response.getWriter().println("An error has occurred");
             e.printStackTrace();
         }
